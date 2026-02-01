@@ -21,7 +21,7 @@ PARAMETER {
 }
 
 ASSIGNED {
-    v (mV)
+    vpost (mV)
     vpre (mV)
     i (nA)
 }
@@ -44,7 +44,7 @@ BREAKPOINT {
 }
 
 DERIVATIVE state {
-    w' = eta * ((vpre - xo) * (v - yo) + k1)
+    w' = eta * ((vpre - xo) * (vpost - yo) + k1)
 
     if (w > 1.0) { w = 1.0 }
     if (w < 0.0) { w = 0.0 }
