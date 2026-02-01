@@ -17,17 +17,17 @@ h.setpointer(n1(0.5)._ref_v, 'vpre', syn1)
 syn2 = h.LinskerCustom(n2(0.5))
 h.setpointer(n3(0.5)._ref_v, 'vpre', syn2)
 
-syn1.eta = 0.01
-syn1.xo = -50
-syn1.yo = -50
-syn1.k1 = 100.0
-syn1.w = 0.5
+syn1.eta = 0.00001
+syn1.xo = -65
+syn1.yo = -63
+syn1.k1 = -50.0
+syn1.w = 0.3
 
-syn2.eta = 0.01
-syn2.xo = -50
-syn2.yo = -50
+syn2.eta = 0.00001
+syn2.xo = -65
+syn2.yo = -63
 syn2.k1 = -50.0 
-syn2.w = 0.5
+syn2.w = 0.3
 
 stim1 = h.IClamp(n1(0.5))
 stim1.delay = 10
