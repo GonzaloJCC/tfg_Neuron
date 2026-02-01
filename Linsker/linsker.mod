@@ -18,7 +18,7 @@ CONSTANT {
 
 PARAMETER {
     gmax = 1 (uS)
-    eta = 0.00001
+    eta = 0.00000001
     xo = -65.0 (mV)
     yo = -63.0 (mV)
     k1 = -50.0

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 W_MAX = 2.0
-TIME = 3500
+TIME = 10000 # ms
 
 h.load_file('stdrun.hoc')
 
