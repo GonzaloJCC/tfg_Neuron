@@ -1,5 +1,5 @@
 NEURON {
-    POINT_PROCESS LinskerCustom
+    POINT_PROCESS Linsker
     POINTER vpre
     RANGE w, gmax, i
     RANGE eta, xo, yo, k1
@@ -12,6 +12,10 @@ UNITS {
     (uS) = (microsiemens)
 }
 
+CONSTANT {
+    W_MAX = 2.0
+}
+
 PARAMETER {
     gmax = 1 (uS)
     eta = 0.00001
@@ -21,6 +25,7 @@ PARAMETER {
 }
 
 ASSIGNED {
+    v (mV)
     vpost (mV)
     vpre (mV)
     i (nA)
@@ -36,16 +41,18 @@ INITIAL {
 
 BREAKPOINT {
     SOLVE state METHOD cnexp
+    vpost = v
     if (vpre > 0) {
-        i = - (w * gmax) * vpre
+        i = -w * vpre
     } else {
         i = 0
     }
 }
 
 DERIVATIVE state {
+    vpost = v
     w' = eta * ((vpre - xo) * (vpost - yo) + k1)
 
-    if (w > 1.0) { w = 1.0 }
-    if (w < 0.0) { w = 0.0 }
+    if (w > W_MAX) { w = W_MAX }
+    if (w < -W_MAX) { w = -W_MAX }
 }
