@@ -1,7 +1,7 @@
 NEURON {
     POINT_PROCESS Linsker
     POINTER vpre
-    RANGE w, gmax, i
+    RANGE w, i
     RANGE eta, xo, yo, k1
     NONSPECIFIC_CURRENT i
 }
@@ -17,7 +17,6 @@ CONSTANT {
 }
 
 PARAMETER {
-    gmax = 1 (uS)
     eta = 0.00000001
     xo = -65.0 (mV)
     yo = -63.0 (mV)
@@ -51,7 +50,7 @@ BREAKPOINT {
 
 DERIVATIVE state {
     vpost = v
-    w' = eta * ((vpre - xo) * (vpost - yo) + k1)
+    w' = eta * ((vpre - xo) * (vpost - yo) + k1) : derivada respecto al tiempo de w (dW/dt)
 
     if (w > W_MAX) { w = W_MAX }
     if (w < -W_MAX) { w = -W_MAX }
