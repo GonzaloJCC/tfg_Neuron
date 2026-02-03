@@ -2,6 +2,7 @@ from neuron import h
 import matplotlib.pyplot as plt
 import numpy as np
 
+SLICE = 10 # ignore the first n values for image clarity
 W_MAX = 2.0
 TIME = 10000 # ms
 
@@ -21,8 +22,8 @@ h.setpointer(n1(0.05)._ref_v, 'vpre', syn1)
 syn2 = h.Linsker(n2(0.05))
 h.setpointer(n3(0.05)._ref_v, 'vpre', syn2)
 
-syn1.w = 0.6 # Inicializar unos pesos
-syn2.w = 0.4
+syn1.w = 0.0015 # Inicializar unos pesos
+syn2.w = 0.001
 
 weights = [syn1.w, syn2.w]
 
@@ -68,14 +69,14 @@ while h.t < t_stop:
 
 fig, axs = plt.subplots(2, 1, figsize=(10, 10), sharex=True)
 
-axs[0].plot(t_vec, w1_vec, label='w1')
-axs[0].plot(t_vec, w2_vec, label='w2')
+axs[0].plot(t_vec[SLICE:], w1_vec[SLICE:], label='w1')
+axs[0].plot(t_vec[SLICE:], w2_vec[SLICE:], label='w2')
 axs[0].set_ylabel('Pesos')
 axs[0].legend()
 axs[0].grid(True)
 
-axs[1].plot(t_vec, i1_vec, label='i1')
-axs[1].plot(t_vec, i2_vec, label='i2')
+axs[1].plot(t_vec[SLICE:], i1_vec[SLICE:], label='i1')
+axs[1].plot(t_vec[SLICE:], i2_vec[SLICE:], label='i2')
 axs[1].set_ylabel('Corriente (nA)')
 axs[1].set_xlabel('Tiempo (ms)')
 axs[1].legend()
