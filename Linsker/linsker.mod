@@ -42,7 +42,7 @@ BREAKPOINT {
     SOLVE state METHOD cnexp
     vpost = v
     if (vpre > 0) {
-        i = -w * vpre
+        i = -w * vpost
     } else {
         i = 0
     }
