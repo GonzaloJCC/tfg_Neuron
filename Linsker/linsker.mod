@@ -17,10 +17,10 @@ CONSTANT {
 }
 
 PARAMETER {
-    eta = 0.00000001
+    eta = 0.00001
     xo = -65.0 (mV)
-    yo = -63.0 (mV)
-    k1 = -50.0
+    yo = -65.0 (mV)
+    k1 = -500.0
 }
 
 ASSIGNED {
@@ -41,11 +41,9 @@ INITIAL {
 BREAKPOINT {
     SOLVE state METHOD cnexp
     vpost = v
-    if (vpre > 0) {
-        i = -w * vpost
-    } else {
-        i = 0
-    }
+
+    i = w * vpost
+
 }
 
 DERIVATIVE state {
