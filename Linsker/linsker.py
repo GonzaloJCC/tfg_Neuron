@@ -99,26 +99,50 @@ while h.t < t_stop:
         if s.w > W_MAX: s.w = W_MAX
         if s.w < -W_MAX: s.w = -W_MAX
 
-fig, axs = plt.subplots(2, 1, figsize=(10, 10), sharex=True)
+# fig, axs = plt.subplots(2, 1, figsize=(10, 10), sharex=True)
 
-axs[0].plot(t_vec[SLICE:], w1_vec[SLICE:], label='w1')
-axs[0].plot(t_vec[SLICE:], w2_vec[SLICE:], label='w2')
-axs[0].set_ylabel('Pesos')
-axs[0].legend()
-axs[0].grid(True)
+# axs[0].plot(t_vec[SLICE:], w1_vec[SLICE:], label='w1')
+# axs[0].plot(t_vec[SLICE:], w2_vec[SLICE:], label='w2')
+# axs[0].set_ylabel('Pesos')
+# axs[0].legend()
+# axs[0].grid(True)
 
-axs[1].plot(t_vec[SLICE:], i1_vec[SLICE:], label='i1')
-axs[1].plot(t_vec[SLICE:], i2_vec[SLICE:], label='i2')
-if PA_FLAG == 1:
-    axs[1].set_ylabel('Corriente (nA)')
-else:
-    axs[1].set_ylabel('Corriente (pA)')
-axs[1].set_xlabel('Tiempo (ms)')
-axs[1].legend()
-axs[1].grid(True)
+# axs[1].plot(t_vec[SLICE:], i1_vec[SLICE:], label='i1')
+# axs[1].plot(t_vec[SLICE:], i2_vec[SLICE:], label='i2')
+# if PA_FLAG == 1:
+#     axs[1].set_ylabel('Corriente (nA)')
+# else:
+#     axs[1].set_ylabel('Corriente (pA)')
+# axs[1].set_xlabel('Tiempo (ms)')
+# axs[1].legend()
+# axs[1].grid(True)
+
+t_np = np.array(t_vec)[SLICE:]
+w1_np = np.array(w1_vec)[SLICE:]
+w2_np = np.array(w2_vec)[SLICE:]
+i1_np = np.array(i1_vec)[SLICE:]
+i2_np = np.array(i2_vec)[SLICE:]
+
+fig, axs = plt.subplots(2, 1, figsize=(6, 5), sharex=True)  
+
+
+# 1. Plot Pesos
+axs[0].plot(t_np, w1_np, label=r'$w_1$', color='red')
+axs[0].plot(t_np, w2_np, label=r'$w_2$', color='blue')
+axs[0].set_ylabel(r'Eficacia Sináptica ($\mu S$)') # uS
+axs[0].legend(loc='upper right')
+axs[0].grid(True, alpha=0.3)
+
+# 2. Plot Corriente
+axs[1].plot(t_np, i1_np, label=r'$i_1$', color='red')
+axs[1].plot(t_np, i2_np, label=r'$i_2$', color='blue')
+axs[1].set_ylabel(r'Corriente ($nA$)') # nA
+axs[1].set_xlabel(r'Tiempo ($ms$)')
+axs[1].legend(loc='upper right')
+axs[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
 if PA_FLAG == 1:
-    plt.savefig('linsker_resultsnA.png')
+    plt.savefig('linsker_resultsnA.pdf')
 else:
-    plt.savefig('linsker_resultspA.png')
+    plt.savefig('linsker_resultspA.pdf')
