@@ -32,7 +32,8 @@ ASSIGNED {
     time_left_pre (ms)
     time_left_post (ms)
     last_t (ms)
-    delta_t (ms)
+    vpre_old (mV)
+    vpost_old (mV)
 }
 
 INITIAL {
@@ -41,28 +42,43 @@ INITIAL {
     time_left_pre = 0
     time_left_post = 0
     last_t = -1
+    vpre_old = -65
+    vpost_old = -65
 }
 
 BREAKPOINT {
+    LOCAL delta_t, pre_spike, post_spike
+    
     if (t > last_t) {
         s = s * exp(-dt / tau_syn)
 
         if (time_left_pre > 0) { time_left_pre = time_left_pre - dt } else { time_left_pre = 0 }
         if (time_left_post > 0) { time_left_post = time_left_post - dt } else { time_left_post = 0 }
 
-        if (vpre >= v_thresh && time_left_pre <= 0) {
+        pre_spike = 0
+        post_spike = 0
+
+        if (vpre >= v_thresh && vpre_old < v_thresh) {
             time_left_pre = tau_plus
             s = 1.0
-            if (time_left_post > 0) {
-                delta_t = time_left_pre - time_left_post
+            pre_spike = 1
+        }
+
+        if (v >= v_thresh && vpost_old < v_thresh) {
+            time_left_post = tau_minus
+            post_spike = 1
+        }
+
+        if (pre_spike == 1 && time_left_post > 0) {
+            delta_t = time_left_pre - time_left_post
+            if (delta_t > 0) {
                 g = g - A_minus * exp(-delta_t / tau_minus)
             }
         }
 
-        if (v >= v_thresh && time_left_post <= 0) {
-            time_left_post = tau_minus
-            if (time_left_pre > 0) {
-                delta_t = time_left_pre - time_left_post
+        if (post_spike == 1 && time_left_pre > 0) {
+            delta_t = time_left_pre - time_left_post
+            if (delta_t < 0) {
                 g = g + A_plus * exp(delta_t / tau_plus)
             }
         }
@@ -70,6 +86,8 @@ BREAKPOINT {
         if (g > g_max) { g = g_max }
         if (g < g_min) { g = g_min }
 
+        vpre_old = vpre
+        vpost_old = v
         last_t = t
     }
 

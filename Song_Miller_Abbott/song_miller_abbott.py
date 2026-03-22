@@ -67,29 +67,30 @@ n1(0.5).v = -75
 n3(0.5).v = -85
 n2(0.5).v = -70
 
+h.finitialize() 
+
 syn1.g = 0.0052
 syn2.g = 0.005
 
 h.continuerun(TIME)
 
-
-# Gráficas
-# --- Gráficas con formato LaTeX ---
 t_np = np.array(t_vec)[SLICE:]
 g1_np = np.array(g1_vec)[SLICE:]
 g2_np = np.array(g2_vec)[SLICE:]
 
-i1_np = -np.array(i1_vec)[SLICE:] 
+i1_np = -np.array(i1_vec)[SLICE:]
 i2_np = -np.array(i2_vec)[SLICE:]
 
 fig, axs = plt.subplots(2, 1, figsize=(6, 5), sharex=True)
 
+# Corriente
 axs[0].plot(t_np, i1_np, label=r'i1', color='red')
 axs[0].plot(t_np, i2_np, label=r'i2', color='blue')
-axs[0].set_ylabel(r'Corriente ($pA$)') 
+axs[0].set_ylabel(r'Corriente ($pA$)')
 axs[0].legend(loc='upper right')
 axs[0].grid(True, alpha=0.3)
 
+# Conductancia
 axs[1].plot(t_np, g1_np, label=r'g1', color='red')
 axs[1].plot(t_np, g2_np, label=r'g2', color='blue')
 axs[1].set_ylabel(r'Conductancia ($pS$)')
@@ -98,4 +99,4 @@ axs[1].legend(loc='upper right')
 axs[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('stdp_results_neuron.pdf')
+plt.savefig('stdp_results.pdf')
